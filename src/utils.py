@@ -53,6 +53,8 @@ class ClipBoxes(nn.Module):
 
     def forward(self, boxes, img):
         batch_size, num_channels, height, width = img.shape
+        width = width.to(boxes.device)
+        height = height.to(boxes.device)
 
         boxes[:, :, 0] = torch.clamp(boxes[:, :, 0], min=0)
         boxes[:, :, 1] = torch.clamp(boxes[:, :, 1], min=0)
