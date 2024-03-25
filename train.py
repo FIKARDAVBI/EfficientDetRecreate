@@ -119,9 +119,6 @@ def train(opt):
                 writer.add_scalar('Train/Total_loss', total_loss, epoch * num_iter_per_epoch + iter)
                 writer.add_scalar('Train/Regression_loss', reg_loss, epoch * num_iter_per_epoch + iter)
                 writer.add_scalar('Train/Classfication_loss (focal loss)', cls_loss, epoch * num_iter_per_epoch + iter)
-                del cls_loss
-                del reg_loss
-                del loss
 
             except Exception as e:
                 print(e)
@@ -184,6 +181,13 @@ def train(opt):
             if epoch - best_epoch > opt.es_patience > 0:
                 print("Stop training at epoch {}. The lowest loss achieved is {}".format(epoch, loss))
                 break
+            del cls_loss
+            del reg_loss
+            del loss
+            del loss_classification_ls
+            del loss_regression_ls
+            del loss
+
     writer.close()
 
 
