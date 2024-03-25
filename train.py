@@ -119,6 +119,9 @@ def train(opt):
                 writer.add_scalar('Train/Total_loss', total_loss, epoch * num_iter_per_epoch + iter)
                 writer.add_scalar('Train/Regression_loss', reg_loss, epoch * num_iter_per_epoch + iter)
                 writer.add_scalar('Train/Classfication_loss (focal loss)', cls_loss, epoch * num_iter_per_epoch + iter)
+                del cls_loss
+                del reg_loss
+                del loss
 
             except Exception as e:
                 print(e)
