@@ -187,6 +187,8 @@ def train(opt):
             del loss_classification_ls
             del loss_regression_ls
             del loss
+            del epoch_loss
+            del total_loss
 
     writer.close()
 
