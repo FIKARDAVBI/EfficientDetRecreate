@@ -181,13 +181,6 @@ def train(opt):
             if epoch - best_epoch > opt.es_patience > 0:
                 print("Stop training at epoch {}. The lowest loss achieved is {}".format(epoch, loss))
                 break
-            del cls_loss
-            del reg_loss
-            del loss
-            del loss_classification_ls
-            del loss_regression_ls
-            del epoch_loss
-            del total_loss
 
     writer.close()
 
