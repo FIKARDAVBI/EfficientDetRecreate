@@ -9,6 +9,7 @@ from src.model import EfficientDet
 from tensorboardX import SummaryWriter
 import shutil
 import numpy as np
+import gc
 from tqdm.autonotebook import tqdm
 
 
@@ -150,6 +151,7 @@ def train(opt):
                 'Epoch: {}/{}. Classification loss: {:1.5f}. Regression loss: {:1.5f}. Total loss: {:1.5f}'.format(
                     epoch + 1, opt.num_epochs, cls_loss, reg_loss,
                     np.mean(loss)))
+            print(torch.cuda.memory_stats())
             writer.add_scalar('Test/Total_loss', loss, epoch)
             writer.add_scalar('Test/Regression_loss', reg_loss, epoch)
             writer.add_scalar('Test/Classfication_loss (focal loss)', cls_loss, epoch)
@@ -181,7 +183,16 @@ def train(opt):
             if epoch - best_epoch > opt.es_patience > 0:
                 print("Stop training at epoch {}. The lowest loss achieved is {}".format(epoch, loss))
                 break
-
+        del loss
+        del epoch_loss
+        del loss_classification_ls
+        del loss_regression_ls
+        del cls_loss
+        del reg_loss
+        del total_loss
+        gc.collect()
+        torch.cuda.empty_cache()
+        
     writer.close()
 
 
